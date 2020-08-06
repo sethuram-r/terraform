@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lock-deployment
+  labels:
+    app: lock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lock
+  template:
+    metadata:
+      labels:
+        app: lock
+    spec:
+      containers:
+      - name: lock
+        image: sethuram975351/lock:latest
+        ports:
+        - containerPort: 8083
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVER
+          value: kafka-service:9092
+        - name: REDIS_HOST
+          value: redis-service
+        - name:  REDIS_PORT
+          value:  "6379"
+       
+
+# have to configure redis 

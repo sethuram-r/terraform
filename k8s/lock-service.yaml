@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lock-service
+spec:
+  selector:
+    app: lock
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083

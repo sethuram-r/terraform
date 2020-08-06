@@ -1,0 +1,22 @@
+{
+  "name": "Smartshare Client",
+  "client_secret": "PfPqga3V2TEe0ERfHo7H59eiLfGszQCDXtoARUaPZwQt7D23Agn5_ufdzJFwMWHK",
+  "callbacks": [
+    "http://localhost:4200/signin-callback",
+    "http://localhost:4200/assets/silent-callback.html",
+    "http://34.89.8.57:4200/signin-callback",
+    "http://34.89.8.57:4200/assets/silent-callback.html"
+  ],
+  "allowed_origins": [
+    "http://localhost:4200",
+    "http://34.89.8.57:4200/assets/silent-callback.html"
+  ],
+  "web_origins": [
+    "http://localhost:4200",
+    "http://34.89.8.57:4200/assets/silent-callback.html"
+  ],
+  "allowed_logout_urls": [
+    "http://localhost:4200/signout-callback",
+    "http://34.89.8.57:4200/signout-callback"
+  ]
+}

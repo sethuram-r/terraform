@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: sethuram975351/frontend:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: GATEWAY_URL
+              value: "http://34.105.151.44:8081"
+            - name: OAUTH_URL
+              value: "http://34.89.8.57:4200"

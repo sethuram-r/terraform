@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deployment
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: sethuram975351/gateway:latest
+          ports:
+            - containerPort: 8081
+          env:
+            - name: FRONTEND_URL
+              value: "http://34.89.8.57:4200"
+            - name: CORE_SERVER_URL
+              value: "http://core-service:8084"
+            - name: ADMINISTRATION_SERVER_URL
+              value: "http://admin-service:8085"
+            - name: LOCK_SERVER_URL
+              value: "http://lock-service:8083"

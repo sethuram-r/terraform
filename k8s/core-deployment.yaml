@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-deployment
+  labels:
+    app: core
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: core
+  template:
+    metadata:
+      labels:
+        app: core
+    spec:
+      containers:
+      - name: core
+        image: sethuram975351/core:latest
+        ports:
+        - containerPort: 8084
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVER
+          value: kafka-service:9092
+        - name: LOCK_SERVER_HOSTNAME
+          value: lock-service
+        - name:  LOCK_SERVER_PORT
+          value: "8083"
+        - name: ACCESS_SERVER_HOSTNAME
+          value: admin-service
+        - name: ACCESS_SERVER_PORT
+          value: "8085"
+        - name: AWS_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: aws_access_key
+        - name: AWS_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: aws_secret_key
+        - name: AWS_REGION
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: aws_region
+
+
+# have to create kubernetes secrets before deploying this in gke

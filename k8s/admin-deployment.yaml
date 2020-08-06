@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-deployment
+  labels:
+    app: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: admin
+  template:
+    metadata:
+      labels:
+        app: admin
+    spec:
+      containers:
+      - name: admin
+        image: sethuram975351/admin:latest
+        ports:
+        - containerPort: 8085
+        env:
+        - name: KAFKA_BOOTSTRAP_SERVER
+          value: kafka-service:9092
+        - name: CORE_SERVER_HOSTNAME
+          value: core-service
+        - name:  CORE_SERVER_PORT
+          value:  "8084"
+        - name: JDBC_URL
+          value: jdbc:postgresql://postgres-service:5432/postgres
+        - name: DATABASE_USERNAME
+          value: postgres
+        - name: DATABASE_PASSWORD
+          value: postgres
+
+
+#have to configure postgres url
