@@ -5,3 +5,4 @@
 .terraform/plugins/darwin_amd64/terraform-provider-aws_v2.70.0_x4
 .terraform/plugins/darwin_amd64/terraform-provider-null_v2.1.2_x4
 terraform.tfstate.d/development/terraform.tfstate.backup
+terraform.tfstate.d/development/terraform.tfstate

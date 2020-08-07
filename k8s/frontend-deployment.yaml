@@ -21,6 +21,6 @@ spec:
             - containerPort: 80
           env:
             - name: GATEWAY_URL
-              value: "http://34.105.151.44:8081"
+              value: "http://34.89.8.57:8081"
             - name: OAUTH_URL
-              value: "http://34.89.8.57:4200"
+              value: "http://35.230.146.13:4200"

@@ -21,7 +21,7 @@ spec:
             - containerPort: 8081
           env:
             - name: FRONTEND_URL
-              value: "http://34.89.8.57:4200"
+              value: "http://35.230.146.13:4200"
             - name: CORE_SERVER_URL
               value: "http://core-service:8084"
             - name: ADMINISTRATION_SERVER_URL

@@ -4,19 +4,19 @@
   "callbacks": [
     "http://localhost:4200/signin-callback",
     "http://localhost:4200/assets/silent-callback.html",
-    "http://34.89.8.57:4200/signin-callback",
-    "http://34.89.8.57:4200/assets/silent-callback.html"
+    "http://35.230.146.13:4200/signin-callback",
+    "http://35.230.146.13:4200/assets/silent-callback.html"
   ],
   "allowed_origins": [
     "http://localhost:4200",
-    "http://34.89.8.57:4200/assets/silent-callback.html"
+    "http://35.230.146.13:4200/assets/silent-callback.html"
   ],
   "web_origins": [
     "http://localhost:4200",
-    "http://34.89.8.57:4200/assets/silent-callback.html"
+    "http://35.230.146.13:4200/assets/silent-callback.html"
   ],
   "allowed_logout_urls": [
     "http://localhost:4200/signout-callback",
-    "http://34.89.8.57:4200/signout-callback"
+    "http://35.230.146.13:4200/signout-callback"
   ]
 }

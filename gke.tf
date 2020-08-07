@@ -25,7 +25,7 @@ provider "aws" {
   access_key = var.aws_root_access_key
   secret_key = var.aws_root_secret_key
 }
-//export TF_VAR_auth0_token=
+
 
 module "bucket_access"{
   bucket_name = "smartshare_user_dev"
@@ -169,4 +169,6 @@ resource "null_resource" "configure_auth0" {
   curl -H 'Authorization: Bearer ${var.auth0_token}' -X PATCH  -H 'Content-Type: application/json' -d @auth1.json https://smartshare.eu.auth0.com/api/v2/clients/KLGG9PHgbxBwiHJinbFByrLdbYg1Gll5
   EOT
   }
+   depends_on = [null_resource.execute_kubectl_commands]
   }
+  
