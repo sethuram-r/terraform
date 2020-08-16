@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"bucket_access","Source":"./s3","Dir":"s3"}]}
+{"Modules":[{"Key":"release-prometheus-operator","Source":"OpenQAI/release-prometheus-operator/helm","Version":"0.0.3","Dir":".terraform/modules/release-prometheus-operator/terraform-helm-release-prometheus-operator-0.0.3"},{"Key":"bucket_access","Source":"./s3","Dir":"s3"},{"Key":"","Source":"","Dir":"."}]}

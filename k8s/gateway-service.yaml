@@ -7,7 +7,13 @@ spec:
   selector:
     app: gateway
   ports:
-    - protocol: TCP
+    - name: gateway
+      protocol: TCP
       port: 8081
       targetPort: 8081
-  loadBalancerIP: "34.89.8.57"
+      
+    - name: prometheus
+      protocol: TCP
+      port: 9100
+      targetPort: 9100
+  loadBalancerIP: "35.246.109.70"

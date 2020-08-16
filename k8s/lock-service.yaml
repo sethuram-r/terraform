@@ -6,6 +6,11 @@ spec:
   selector:
     app: lock
   ports:
-    - protocol: TCP
+    - name: lock
+      protocol: TCP
       port: 8083
       targetPort: 8083
+    - name: prometheus
+      protocol: TCP
+      port: 9100
+      targetPort: 9100

@@ -6,6 +6,11 @@ spec:
   selector:
     app: core
   ports:
-    - protocol: TCP
+    - name: core 
+      protocol: TCP
       port: 8084
       targetPort: 8084
+    - name: prometheus 
+      protocol: TCP
+      port: 9100
+      targetPort: 9100

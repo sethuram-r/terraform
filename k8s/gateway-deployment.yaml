@@ -19,9 +19,10 @@ spec:
           image: sethuram975351/gateway:latest
           ports:
             - containerPort: 8081
+            - containerPort: 9100
           env:
             - name: FRONTEND_URL
-              value: "http://35.230.146.13:4200"
+              value: "http://34.105.151.44:4200"
             - name: CORE_SERVER_URL
               value: "http://core-service:8084"
             - name: ADMINISTRATION_SERVER_URL

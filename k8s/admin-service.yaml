@@ -6,6 +6,11 @@ spec:
   selector:
     app: admin
   ports:
-    - protocol: TCP
+    - name: admin
+      protocol: TCP
       port: 8085
       targetPort: 8085
+    - name: prometheus
+      protocol: TCP
+      port: 9100
+      targetPort: 9100

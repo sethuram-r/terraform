@@ -19,6 +19,7 @@ spec:
         image: sethuram975351/lock:latest
         ports:
         - containerPort: 8083
+        - containerPort: 9100
         env:
         - name: KAFKA_BOOTSTRAP_SERVER
           value: kafka-service:9092

@@ -13,6 +13,7 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
+
 variable "auth0_token" {}
 variable "aws_root_access_key" {}
 variable "aws_root_secret_key" {}
@@ -123,7 +124,7 @@ resource "null_resource" "passing_aws_secret" {
   resource "null_resource" "modifying_kubectl_services_yamls" {
   provisioner "local-exec" {
   working_dir = "${path.module}/k8s" 
-  command = "yq w -i frontend-services.yaml 'spec.loadBalancerIP'  ${google_compute_address.frontend.address} --style=double;yq w -i gateway-service.yaml 'spec.loadBalancerIP'  ${google_compute_address.gateway.address} --style=double"
+  command = "yq w -i frontend-service.yaml 'spec.loadBalancerIP'  ${google_compute_address.frontend.address} --style=double;yq w -i gateway-service.yaml 'spec.loadBalancerIP'  ${google_compute_address.gateway.address} --style=double"
 
   }
   depends_on = [null_resource.passing_aws_secret]
@@ -149,8 +150,12 @@ resource "null_resource" "execute_kubectl_commands" {
   command= <<EOT
   kubectl apply -f kafka.yaml;kubectl apply -f postgres.yaml;kubectl apply -f redis.yaml;kubectl apply -f lock-deployment.yaml;kubectl apply -f lock-service.yaml;kubectl apply -f admin-deployment.yaml
   kubectl apply -f admin-service.yaml;kubectl apply -f core-deployment.yaml;kubectl apply -f core-service.yaml
-  kubectl apply -f gateway-service.yaml;kubectl apply -f frontend-services.yaml
+  kubectl apply -f gateway-service.yaml;kubectl apply -f frontend-service.yaml
   kubectl apply -f gateway-deployment.yaml;kubectl apply -f frontend-deployment.yaml
+  kubectl apply -f prometheus-deployment.yml
+  kubectl apply -f prometheus-service.yml
+  kubectl apply -f grafana-deployment.yml
+  kubectl apply -f grafana-service.yml
 EOT
   }
   depends_on = [null_resource.modifying_kubectl_deployment_yamls]
@@ -172,3 +177,77 @@ resource "null_resource" "configure_auth0" {
    depends_on = [null_resource.execute_kubectl_commands]
   }
   
+  ########################################### prometheus & grafana #############################
+
+#   provider "helm" {
+#   kubernetes {
+#     host                   = google_container_cluster.primary.endpoint
+#     client_certificate     = base64decode(google_container_cluster.primary.master_auth.0.client_certificate)
+#     client_key             = base64decode(google_container_cluster.primary.master_auth.0.client_key)
+#     cluster_ca_certificate = base64decode(google_container_cluster.primary.master_auth.0.cluster_ca_certificate)
+#   }
+# }
+
+
+# resource "helm_release" "prometheus_smarshare" {
+#   name  = "prometheus"
+#   repository = "https://kubernetes-charts.storage.googleapis.com" 
+#   chart = "stable/prometheus"
+
+#   values = [file("prometheus.yml")]
+
+#   set {
+#     name  = "rbac.create"
+#     value = "false"
+#   }
+
+#   set {
+#     name  = "server.service.type"
+#     value = "LoadBalancer"
+#   }
+#   depends_on = [null_resource.execute_kubectl_commands]
+# }
+
+# resource "helm_release" "grafana" {
+#   name  = "grafana"
+#   repository = "https://charts.cloudposse.com/incubator/"
+#   chart = "stable/grafana"
+
+#   set {
+#     name  = "rbac.create"
+#     value = "false"
+#   }
+
+#   set {
+#     name  = "server.service.type"
+#     value = "LoadBalancer"
+#   }
+#   depends_on = [helm_release.prometheus]
+# }
+
+# resource "null_resource" "prometheus" {
+#   provisioner "local-exec" {
+#   working_dir = "."  
+#   command =  <<EOT
+#   helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+#   helm install prometheus stable/prometheus  --set rbac.create=false --set server.service.type=LoadBalancer -f prometheus.yml
+#    EOT
+#   }
+#   depends_on = [null_resource.execute_kubectl_commands]
+#   }
+
+#   resource "null_resource" "grafana" {
+#   provisioner "local-exec" {
+#   working_dir = "."  
+#   command =  "helm install grafana stable/grafana  --set rbac.create=false --set server.service.type=LoadBalancer"
+#   }
+#   depends_on = [null_resource.prometheus]
+#   }
+
+# module "release-prometheus-operator" {
+#   source  = "OpenQAI/release-prometheus-operator/helm"
+#   version = "0.0.3"
+#   grafana_service_type = "LoadBalancer"
+#   prometheus_service_type="LoadBalancer"
+#   grafana_adminPassword="admin"
+# }
